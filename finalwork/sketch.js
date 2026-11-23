@@ -200,7 +200,7 @@ function drawInfo(){
   fill(220);
   textSize(13);
   const y0 = height + 22;
-  text("ステップ: " + stepCount + "　円の数: " + circles.lemgth + "繋がり: " + links.length, 10, y0);
+  text("ステップ: " + stepCount + "　円の数: " + circles.length + " 繋がり: " + links.length, 10, y0);
   text("消滅 - 孤立: " + diedOld + " つながりすぎ: " + diedOverloaded + " 寿命: " + diedOld, 10, y0 + 22);
   text("左クリック:消す スペース:停止 r:やり直し", 10, y0 + 44);
   if(paused){

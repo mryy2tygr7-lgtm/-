@@ -128,7 +128,7 @@ function stepWorld(){
     const c = circles[i];
     c.age++;
     const old = (c.age > c.life);
-    const lonely = (c.age > baby && c.count < 0.6 * c.r);
+    const lonely = (c.age > baby && c.count < 0.5 * c.r);
     const overloaded = (c.count > 2 * c.r);
     if(old){
       c.dead = true;

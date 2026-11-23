@@ -11,7 +11,7 @@ let diedOverloaded;
 let diedOld;
 
 function setup(){
-  createCanvas(800, height);
+  createCanvas(800, height + 80);
   resetWorld();
 }
 
@@ -47,7 +47,7 @@ for(let i = 0; i < circles.length; i++){
   const far = 3 * rmax * unit;
   const exfar = 4 * rmax * unit;
 
-  if(d < near || (d < far && random(0,1) < o.5) || (d < exfar && random(0,1) < 0.3)){
+  if(d < near || (d < far && random(0,1) < 0.5) || (d < exfar && random(0,1) < 0.3)){
     links.push({a: c, b: o});
     sumR += o.cr;
     sumG += o.cg;
@@ -57,9 +57,9 @@ for(let i = 0; i < circles.length; i++){
   }
 }
 
-  const rngR random(0,255);
-  const rndG random(0,255);
-  const rndB random(0,255);
+  const rndR = random(0,255);
+  const rndG = random(0,255);
+  const rndB = random(0,255);
 
   if(n === 0){
     c.cr = rndR;
@@ -68,7 +68,7 @@ for(let i = 0; i < circles.length; i++){
   } else{
     c.cr = ((sumR / n) + rndR) / 2;
     c.cg = ((sumG / n) + rndG) / 2;
-    c.cb = ((sumB / n) + endB) / 2;
+    c.cb = ((sumB / n) + rndB) / 2;
   }
 
 for(let i = 0; i < neighbors.length; i++){
@@ -77,11 +77,11 @@ for(let i = 0; i < neighbors.length; i++){
   o.cg = (o.cg + c.cg) / 2;
   o.cb = (o.cb + c.cb) / 2;
 } 
-  cicles.push(c);
+  circles.push(c);
 }
 
 function isFree(x,y,r){
-  for(let i = 0; i < cicles.length; i++){
+  for(let i = 0; i < circles.length; i++){
     const o = circles[i];
     if(dist(x, y, o.x, o.y) < (r + o.r) * unit){
       return false;
@@ -171,17 +171,26 @@ function removeDead(){
   links = aliveLinks;
 }
 
+function drawLinks(){
+ stroke(200,90);
+ strokeWeight(2);
+ for(let i = 0; i < links.length; i++){
+  const l = links[i];
+  line(l.a.x, l.a.y, l.b.x, l.b.y);
+ }
+}
+
 function drawCircles(){
   for(let i = 0; i < circles.length; i++){
     const c = circles[i];
     fill(c.cr, c.cg, c.cb);
-    if(a.age <= baby){
+    if(c.age <= baby){
       stroke(255);
       strokeWeight(2);
     } else{
       noStroke();
     }
-    ellipse(c.x, c.y c.r * unit * 2);
+    ellipse(c.x, c.y, c.r * unit * 2);
   }
 }
 
@@ -189,7 +198,7 @@ function drawInfo(){
   push();
   noStroke();
   fill(220);
-  textsize(13);
+  textSize(13);
   const y0 = height + 22;
   text("ステップ: " + stepCount + "　円の数: " + circles.lemgth + "繋がり: " + links.length, 10, y0);
   text("消滅 - 孤立: " + diedOld + " つながりすぎ: " + diedOverloaded + " 寿命: " + diedOld, 10, y0 + 22);
@@ -220,11 +229,4 @@ function keyPressed(){
     resetWorld();
   }
   return false;
-
-
-
-
-
-
-  
-  
+}
